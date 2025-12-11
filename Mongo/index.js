@@ -18,19 +18,10 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", userSchema);
 
-User.findById("6939804fd99e5e54eaf4cf5a")
-.then((res) =>{
+User.updateMany({age: {$gt: 20}}, {age: 15})
+.then((res) => {
   console.log(res);
-
-})
-.catch((err)=>{
+}).catch((err) =>{
   console.log(err);
 });
 
-// User.insertMany([
-//   { name: "Mike", email: "mike@yahoo.com", age: 25 },
-//   { name: "Eleven", email: "el@yahoo.com", age: 22 },
-//   { name: "Will", email: "will@yahoo.com", age: 23 },
-// ]).then((res) => {
-//   console.log(res);
-// });
