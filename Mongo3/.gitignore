@@ -1,0 +1,26 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.*
+!.env.example   # keep example file if you want
+
+# Logs
+*.log
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Eclipse / Java
+.classpath
+.project
+.settings/
+
+# Optional: build folders
+dist/
+build/
