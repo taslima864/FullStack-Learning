@@ -34,7 +34,7 @@ const bookSchema = new mongoose.Schema({
 
 const Book = mongoose.model("Book", bookSchema);
 
-Book.findByIdAndUpdate("693c63873bd1c0df25bb1754",{price: -500},{runValidators: true}).then((res) => {
+Book.findByIdAndUpdate("693c63873bd1c0df25bb1754",{price: -100},{runValidators: true}).then((res) => {
   console.log(res);
 }).catch((err) =>{
   console.log(err.errors.price.properties.message);
