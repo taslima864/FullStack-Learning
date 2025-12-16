@@ -26,10 +26,15 @@ app.get("/", (req, res) => {
   res.send("Hi, I am root");
 });
 
-//index route to show all listings
+//index route
 app.get("/listings", async (req, res) => {
   const allListings = await Listing.find({});
   res.render("./listings/index.ejs", { allListings });
+});
+
+//New Route
+app.get("/listings/new", (req, res) => {
+  res.render("listings/new.ejs");
 });
 
 //Show route
@@ -42,6 +47,12 @@ app.get("/listings/:id", async (req, res) => {
   }
 
   res.render("listings/show.ejs", { listing });
+});
+
+app.post("/listings", async (req, res) => {
+  const newListing = new Listing(req.body.listing);
+  await newListing.save();
+  res.redirect("/listings");
 });
 
 app.listen(8080, () => {
