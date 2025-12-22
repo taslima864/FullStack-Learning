@@ -49,9 +49,6 @@ app.post("/listings", async (req, res) => {
   res.redirect("/listings");
 });
 
-
-
-
 //Show route
 app.get("/listings/:id", async (req, res) => {
   const { id } = req.params;
