@@ -94,3 +94,9 @@ body {
   opacity: 0.2;
   background-color: white;
 }
+
+/* New page */
+.add-btn{
+  border: none !important;
+  background-color: #fe424d !important;
+}
