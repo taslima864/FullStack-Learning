@@ -107,4 +107,15 @@ body {
 .add-btn {
   border: none !important;
   background-color: #fe424d !important;
+  margin-bottom: 4rem !important;
+}
+
+
+
+/* Edit page */
+
+.edit-btn {
+  border: none !important;
+  background-color: #fe424d !important;
+
 }
