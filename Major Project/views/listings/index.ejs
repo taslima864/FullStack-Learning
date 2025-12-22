@@ -10,23 +10,22 @@
     <a href="/listings/<%= listing._id%>" class="listing-link">
       <div class="col">
         <div class="card h-100">
-          
           <img
             src="<%= listing.image.url %>"
             class="card-img-top"
             alt="listing-image"
           />
-      
-            <div class="card-img-overlay">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">
-                This is a wider card with supporting text below as a natural
-                lead-in to additional content. This content is a little bit
-                longer.
-              </p>
-              <p class="card-text"><small>Last updated 3 mins ago</small></p>
-            </div>
-        
+
+          <div class="card-img-overlay">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">
+              This is a wider card with supporting text below as a natural
+              lead-in to additional content. This content is a little bit
+              longer.
+            </p>
+            <p class="card-text"><small>Last updated 3 mins ago</small></p>
+          </div>
+
           <div class="card-body">
             <p class="card-text">
               <b><%= listing.title %></b><br />
@@ -36,8 +35,7 @@
           </div>
         </div>
       </div>
-      </a>
-      <% } %>
-   
+    </a>
+    <% } %>
   </div>
 </body>
