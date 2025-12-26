@@ -26,6 +26,14 @@
         <form method="POST" action="/chats/<%=chat._id %>?_method=DELETE">
           <button onclick="return confirm('Are you sure?')">Delete</button>
         </form>
+        <br />
+        <form
+          action="/chats/<%= chat._id%>"
+          method="
+          GET"
+        >
+          <button>show</button>
+        </form>
       </div>
       <p>Received by: <i><%=chat.to %></i></p>
       <hr />
