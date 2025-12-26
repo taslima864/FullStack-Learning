@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-
+const ExpressError = require("./ExpressError");
 const checkToken =
   ("/api",
   (req, res, next) => {
@@ -8,15 +8,19 @@ const checkToken =
     if (token === "giveaccess") {
       next();
     }
-    res.send("ACCESS DENIED!");
+    throw new ExpressError(401, "ACCESS DENIED");
   });
+
+app.get("/api", checkToken, (req, res) => {
+  res.send("data");
+});
 
 app.get("/", (req, res) => {
   res.send("Hi, I am root.");
 });
 
-app.get("/api", checkToken, (req, res) => {
-  res.send("data");
+app.get("/random", (req, res) => {
+  res.send("This is a random page");
 });
 
 app.get("/err", (req, res) => {
@@ -25,14 +29,7 @@ app.get("/err", (req, res) => {
 
 app.use((err, req, res, next) => {
   console.log("ERROR");
-});
-
-app.get("/random", (req, res) => {
-  res.send("This is a random page");
-});
-
-app.get((req, res) => {
-  res.status(404).send("Page not found");
+  res.send(err);
 });
 
 app.listen(8080, () => {
