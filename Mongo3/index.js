@@ -61,54 +61,56 @@ app.post("/chats", async (req, res, next) => {
   }
 });
 
+function asyncWrap(fn) {
+  return function (req, res, next) {
+    fn(req, res, next).catch((err) => next(err));
+  };
+}
+
 //NEW - show route
-app.get("/chats/:id", async (req, res, next) => {
-  try {
+app.get(
+  "/chats/:id",
+  asyncWrap(async (req, res, next) => {
     let { id } = req.params;
     let chat = await Chat.findById(id);
     if (!chat) {
       next(new ExpressError(404, "Chat not found"));
     }
     res.render("edit.ejs", { chat });
-  } catch (err) {
-    next(err);
-  }
-});
+  })
+);
 
 //edit route
-app.get("/chats/:id/edit", async (req, res) => {
-  try {
+app.get(
+  "/chats/:id/edit",
+  asyncWrap(async (req, res) => {
     let { id } = req.params;
     let chat = await Chat.findById(id);
     res.render("edit.ejs", { chat });
-  } catch (err) {
-    next(err);
-  }
-});
+  })
+);
 
 //update route
-app.put("/chats/:id", async (req, res) => {
-  try {
+app.put(
+  "/chats/:id",
+  asyncWrap(async (req, res) => {
     let { id } = req.params;
     let { msg } = req.body;
 
     await Chat.findByIdAndUpdate(id, { msg }, { runValidators: true });
     res.redirect("/chats");
-  } catch (err) {
-    next(err);
-  }
-});
+  })
+);
 
 //delete route
-app.delete("/chats/:id", async (req, res) => {
-  try {
+app.delete(
+  "/chats/:id",
+  asyncWrap(async (req, res) => {
     let { id } = req.params;
     await Chat.findByIdAndDelete(id);
     res.redirect("/chats");
-  } catch (err) {
-    next(err);
-  }
-});
+  })
+);
 
 //Error Handling Middleware
 app.use((err, req, res, next) => {
