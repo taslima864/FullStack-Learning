@@ -112,6 +112,20 @@ app.delete(
   })
 );
 
+const handleValidationErr = (err) => {
+  console.log("this was a validatio error pleaser follow the rules.");
+  console.dir(err.message);
+  return err;
+};
+
+app.use((err, req, res, next) => {
+  console.log(err.name);
+  if (err.name === "ValidationError") {
+    err = handleValidationErr(err);
+  }
+  next(err);
+});
+
 //Error Handling Middleware
 app.use((err, req, res, next) => {
   let { status = 500, message = "Some Error Occurred" } = err;
