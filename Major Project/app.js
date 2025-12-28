@@ -38,15 +38,19 @@ app.get("/listings", async (req, res) => {
 });
 
 //New Route
-app.get("/listings/new", async(req,res) => {
+app.get("/listings/new", async (req, res) => {
   res.render("listings/new.ejs");
 });
 
 // Create route
-app.post("/listings", async (req, res,err) => {
-  const newListing = new Listing(req.body.listing);
-  await newListing.save();
-  res.redirect("/listings");
+app.post("/listings", async (req, res, err) => {
+  try {
+    const newListing = new Listing(req.body.listing);
+    await newListing.save();
+    res.redirect("/listings");
+  } catch (err) {
+    next(err);
+  }
 });
 
 //Show route
@@ -80,6 +84,10 @@ app.delete("/listings/:id", async (req, res) => {
   const deletedListing = await Listing.findByIdAndDelete(id);
   console.log(deletedListing);
   res.redirect("/listings");
+});
+
+app.use((err, req, res, next) => {
+  res.send("Something went wrong!!!");
 });
 
 app.listen(8080, () => {
