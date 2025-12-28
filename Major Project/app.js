@@ -38,12 +38,12 @@ app.get("/listings", async (req, res) => {
 });
 
 //New Route
-app.get("/listings/new", (req, res) => {
+app.get("/listings/new", async(req,res) => {
   res.render("listings/new.ejs");
 });
 
 // Create route
-app.post("/listings", async (req, res) => {
+app.post("/listings", async (req, res,err) => {
   const newListing = new Listing(req.body.listing);
   await newListing.save();
   res.redirect("/listings");

@@ -135,3 +135,16 @@ body {
   padding-left:0;
   padding-right: 0;
 }
+
+.show-img {
+  height: 350px;
+  object-fit: cover;
+  width: 100%;
+}
+
+
+.listing-img {
+  height: 220px;       /* choose what fits your design */
+  object-fit: cover;
+  width: 100%;
+}
