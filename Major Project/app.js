@@ -5,8 +5,8 @@ const Listing = require("./models/listing.js");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
-const { wrap } = require("module");
 const wrapAsync = require("./utils/wrapAsync.js");
+const ExpressError = require("./utils/ExpressError");
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
@@ -48,6 +48,9 @@ app.get("/listings/new", async (req, res) => {
 app.post(
   "/listings",
   wrapAsync(async (req, res, err) => {
+    if(!req.body.listing){
+      throw new ExpressError(400,"Send valid data for listings")
+    }
     const newListing = new Listing(req.body.listing);
     await newListing.save();
     res.redirect("/listings");
@@ -67,28 +70,45 @@ app.get("/listings/:id", async (req, res) => {
 });
 
 // update route
-app.get("/listings/:id/edit", async (req, res) => {
-  let { id } = req.params;
-  const listing = await Listing.findById(id);
-  res.render("listings/edit.ejs", { listing });
-});
+app.get(
+  "/listings/:id/edit",
+  wrapAsync(async (req, res) => {
+    let { id } = req.params;
+    const listing = await Listing.findById(id);
+    res.render("listings/edit.ejs", { listing });
+  })
+);
 
-app.put("/listings/:id", async (req, res) => {
-  let { id } = req.params;
-  await Listing.findByIdAndUpdate(id, { ...req.body.listing });
-  res.redirect("/listings");
-});
+app.put(
+  "/listings/:id",
+  wrapAsync(async (req, res) => {
+    let { id } = req.params;
+    await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+    res.redirect("/listings");
+  })
+);
 
 //Delete route
-app.delete("/listings/:id", async (req, res) => {
-  let { id } = req.params;
-  const deletedListing = await Listing.findByIdAndDelete(id);
-  console.log(deletedListing);
-  res.redirect("/listings");
+app.delete(
+  "/listings/:id",
+  wrapAsync(async (req, res) => {
+    let { id } = req.params;
+    const deletedListing = await Listing.findByIdAndDelete(id);
+    console.log(deletedListing);
+    res.redirect("/listings");
+  })
+);
+
+app.use((req, res, next) => {
+  const err = new Error("Page Not Found");
+  err.statusCode = 404;
+  next(err);
 });
 
 app.use((err, req, res, next) => {
-  res.send("Something went wrong!!!");
+  const statusCode = err.statusCode || 500;
+  const message = err.message || "Something went wrong";
+  res.status(statusCode).send(message);
 });
 
 app.listen(8080, () => {
