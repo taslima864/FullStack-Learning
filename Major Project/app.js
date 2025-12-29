@@ -48,8 +48,8 @@ app.get("/listings/new", async (req, res) => {
 app.post(
   "/listings",
   wrapAsync(async (req, res, err) => {
-    if(!req.body.listing){
-      throw new ExpressError(400,"Send valid data for listings")
+    if (!req.body.listing) {
+      throw new ExpressError(400, "Send valid data for listings");
     }
     const newListing = new Listing(req.body.listing);
     await newListing.save();
@@ -108,7 +108,8 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || "Something went wrong";
-  res.status(statusCode).send(message);
+  // res.status(statusCode).send(message);
+  res.status(statusCode).render("error.ejs", { message });
 });
 
 app.listen(8080, () => {
