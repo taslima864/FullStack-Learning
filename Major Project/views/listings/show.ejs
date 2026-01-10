@@ -2,17 +2,17 @@
 
 <div class="row">
   <div class="col-8 offset-2">
-    <h3>Listing Details :</h3>
+    <h3><%= listing.title%></h3>
 
     <div class="card show-card">
       <img
         src="<%=listing.image.url%>"
         class="card-img-top show-img"
         alt="listing_image"
-         onerror="this.style.visibility='hidden'"
+        onerror="this.style.visibility='hidden'"
       />
       <div class="card-body">
-        <h5 class="card-title"><%= listing.title%></h5>
+        <!-- <h5 class="card-title"><%= listing.title%></h5> -->
         <p class="card-text mb-2"><%= listing.description%></p>
 
         <p class="card-text mb-2">
