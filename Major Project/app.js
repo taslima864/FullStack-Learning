@@ -8,6 +8,8 @@ const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError");
 const { listingSchema } = require("./schema.js");
+const Review = require("./models/review.js");
+
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
@@ -114,6 +116,22 @@ app.delete(
   })
 );
 
+//Reviews
+app.post("/listings/:id/reviews", async(req,res,) =>{
+  let listing = await Listing.findById(req.params.id);
+  let newReview = new Review(req.body.review);
+  listing.reviews.push(newReview);
+
+  await newReview.save();
+  await listing.save();
+
+  console.log("new review saved");
+  res.send("new review saved");
+
+  res.redirect(`/listings/${listing._id}`);
+})
+
+
 app.use((req, res, next) => {
   const err = new Error("Page Not Found");
   err.statusCode = 404;
@@ -126,6 +144,8 @@ app.use((err, req, res, next) => {
   // res.status(statusCode).send(message);
   res.status(statusCode).render("error.ejs", { message });
 });
+
+
 
 app.listen(8080, () => {
   console.log("server is listening to port 8080");
