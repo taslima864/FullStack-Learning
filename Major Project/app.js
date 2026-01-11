@@ -85,7 +85,7 @@ app.post(
 //Show route
 app.get("/listings/:id", async (req, res) => {
   const { id } = req.params;
-  const listing = await Listing.findById(id);
+  const listing = await Listing.findById(id).populate("reviews");
 
   if (!listing) {
     return res.status(404).send("Listing not found");
@@ -134,8 +134,6 @@ app.post("/listings/:id/reviews", validateReview, wrapAsync(async (req, res) => 
   await newReview.save();
   await listing.save();
 
-  console.log("new review saved");
-  res.send("new review saved");
 
   res.redirect(`/listings/${listing._id}`);
 }));
