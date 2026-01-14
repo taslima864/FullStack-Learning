@@ -5,6 +5,7 @@
     <br /><br />
     <h3>Create a New Listing</h3>
     <form method="POST" action="/listings" novalidate class="needs-validation">
+      <!-- Title -->
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
         <input
@@ -18,30 +19,28 @@
         <div class="invalid-feedback">Title should be valid!</div>
       </div>
 
+      <!-- Description -->
       <div class="mb-3">
         <label for="description" class="form-label">Description</label>
         <textarea
-        name="listing[description]"
-        placeholder="Enter description"
-        type="text"
-        class="form-control"
-        required
-        >
-      </textarea>
-      <div class="invalid-feedback">Please enter a short description!</div>
-
-      </div>
-
-      <div class="mb-3">
-        <label for="image" class="form-label">Image Link</label>
-        <input
-          name="listing[image]"
-          placeholder="Enter image URL/Link"
+          name="listing[description]"
+          placeholder="Enter description"
           type="text"
           class="form-control"
-        />
+          required
+        >
+        </textarea>
+        <div class="invalid-feedback">Please enter a short description!</div>
       </div>
 
+      <!-- Image -->
+      <div class="mb-3">
+        <label class="form-label">Image Link</label>
+        <input name="listing[image][url]" 
+        class="form-control" /> 
+      </div>
+
+      <!-- Price -->
       <div class="row">
         <div class="mb-3 col-md-4">
           <label for="price" class="form-label">Price</label>
@@ -54,6 +53,7 @@
           <div class="invalid-feedback">Please enter a valid price!</div>
         </div>
 
+        <!-- Country -->
         <div class="mb-3 col-md-8">
           <label for="country" class="form-label">Country</label>
           <input
@@ -67,6 +67,7 @@
         </div>
       </div>
 
+      <!-- Location -->
       <div class="mb-3">
         <label for="location" class="form-label">Location</label>
         <input
