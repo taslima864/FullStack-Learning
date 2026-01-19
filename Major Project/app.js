@@ -7,7 +7,6 @@ const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError");
 const session = require("express-session");
 const flash = require("connect-flash");
-
 const listingsRouter = require("./routes/listing");
 const Review = require("./routes/review");
 const { connect } = require("http2");
@@ -40,6 +39,9 @@ const sessionOptions = {
   },
 };
 
+app.use(session(sessionOptions));
+
+/* ROUTES */
 app.get("/", (req, res) => {
   res.send("Hi, I am root");
 });
