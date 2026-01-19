@@ -15,7 +15,7 @@ const validateListing = (req, res, next) => {
 
   const { error } = listingSchema.validate(req.body);
   if (error) {
-    const msg = error.details.map(el => el.message).join(",");
+    const msg = error.details.map((el) => el.message).join(",");
     throw new ExpressError(400, msg);
   }
   next();
@@ -29,7 +29,7 @@ router.get(
   wrapAsync(async (req, res) => {
     const allListings = await Listing.find({});
     res.render("listings/index", { allListings });
-  })
+  }),
 );
 
 // NEW
@@ -44,8 +44,9 @@ router.post(
   wrapAsync(async (req, res) => {
     const newListing = new Listing(req.body.listing);
     await newListing.save();
+    req.flash("success", "New Listing Created!");
     res.redirect("/listings");
-  })
+  }),
 );
 
 // SHOW
@@ -57,7 +58,7 @@ router.get(
       throw new ExpressError(404, "Listing not found");
     }
     res.render("listings/show", { listing });
-  })
+  }),
 );
 
 // EDIT
@@ -69,7 +70,7 @@ router.get(
       throw new ExpressError(404, "Listing not found");
     }
     res.render("listings/edit", { listing });
-  })
+  }),
 );
 
 // UPDATE
@@ -81,7 +82,7 @@ router.put(
       runValidators: true,
     });
     res.redirect(`/listings/${req.params.id}`);
-  })
+  }),
 );
 
 // DELETE
@@ -90,7 +91,7 @@ router.delete(
   wrapAsync(async (req, res) => {
     await Listing.findByIdAndDelete(req.params.id);
     res.redirect("/listings");
-  })
+  }),
 );
 
 module.exports = router;
