@@ -55,7 +55,8 @@ router.get(
   wrapAsync(async (req, res) => {
     const listing = await Listing.findById(req.params.id).populate("reviews");
     if (!listing) {
-      throw new ExpressError(404, "Listing not found");
+      req.flash("error", "Listing you requested for does not exist!");
+      return res.redirect("/listings");
     }
     res.render("listings/show", { listing });
   }),
@@ -66,8 +67,9 @@ router.get(
   "/:id/edit",
   wrapAsync(async (req, res) => {
     const listing = await Listing.findById(req.params.id);
-    if (!listing) {
-      throw new ExpressError(404, "Listing not found");
+   if (!listing) {
+      req.flash("error", "Listing you requested for does not exist!");
+      return res.redirect("/listings");
     }
     res.render("listings/edit", { listing });
   }),
