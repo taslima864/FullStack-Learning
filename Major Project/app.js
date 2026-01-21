@@ -42,7 +42,6 @@ const sessionOptions = {
   },
 };
 
-app.use(session(sessionOptions));
 
 /* ROUTES */
 app.get("/", (req, res) => {
@@ -64,6 +63,16 @@ app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   next();
 });
+
+app.get("/demouser",async(req,res)=>{
+  let fakeUser3 = new User({
+    email: "student@gmail.com",
+    username: "delta-student"
+  });
+  let registeredUser = await User.register(fakeUser3,"helloworld")
+  res.send(registeredUser);
+
+})
 /* ROUTES */
 
 app.use("/listings", listingsRouter);
