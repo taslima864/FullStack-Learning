@@ -7,12 +7,14 @@ const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError");
 const session = require("express-session");
 const flash = require("connect-flash");
-const listingsRouter = require("./routes/listing");
-const Review = require("./routes/review");
 const { connect } = require("http2");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
+
+const listingsRouter = require("./routes/listing");
+const reviewRouter = require("./routes/review");
+const userRouter = require("./routes/user");
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
@@ -76,7 +78,8 @@ app.get("/demouser",async(req,res)=>{
 /* ROUTES */
 
 app.use("/listings", listingsRouter);
-app.use("/listings/:id/reviews", Review);
+app.use("/listings/:id/reviews", reviewRouter);
+app.use("/", userRouter);
 
 /* 404 */
 app.use((req, res, next) => {
