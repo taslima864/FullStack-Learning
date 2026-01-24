@@ -24,7 +24,7 @@ router.post(
       req.flash("error", e.message);
       res.redirect("/signup");
     }
-  })
+  }),
 );
 
 // LOGIN FORM
@@ -41,7 +41,17 @@ router.post(
   (req, res) => {
     req.flash("success", "Welcome back!");
     res.redirect("/listings");
-  }
+  },
 );
+
+router.get("/logout", (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    req.flash("success", "you are logged out!");
+    res.redirect("/");
+  });
+});
 
 module.exports = router;
