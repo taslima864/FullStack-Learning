@@ -1,27 +1,9 @@
 const express = require("express");
 const router = express.Router();
-
 const Listing = require("../models/listing");
 const wrapAsync = require("../utils/wrapAsync");
-const ExpressError = require("../utils/ExpressError");
-const { listingSchema } = require("../schema");
-const { isLoggedIn } = require("../middleware.js");
-``;
 
-/* ------------------ VALIDATION ------------------ */
-const validateListing = (req, res, next) => {
-  // normalize image object
-  if (!req.body.listing.image) {
-    req.body.listing.image = {};
-  }
-
-  const { error } = listingSchema.validate(req.body);
-  if (error) {
-    const msg = error.details.map((el) => el.message).join(",");
-    throw new ExpressError(400, msg);
-  }
-  next();
-};
+const { isLoggedIn, isOwner, validateListing } = require("../middleware.js");
 
 /* ------------------ ROUTES ------------------ */
 
@@ -75,6 +57,7 @@ router.get(
 router.get(
   "/:id/edit",
   isLoggedIn,
+  isOwner,
   wrapAsync(async (req, res) => {
     const listing = await Listing.findById(req.params.id);
     if (!listing) {
@@ -89,13 +72,13 @@ router.get(
 router.put(
   "/:id",
   isLoggedIn,
+  isOwner,
   validateListing,
   wrapAsync(async (req, res) => {
-    await Listing.findByIdAndUpdate(req.params.id, req.body.listing, {
-      runValidators: true,
-    });
+    const { id } = req.params;
+    await Listing.findByIdAndUpdate(id, req.body.listing);
     req.flash("success", "Listing Updated!");
-    res.redirect(`/listings/${req.params.id}`);
+    res.redirect(`/listings/${id}`);
   }),
 );
 
@@ -103,6 +86,7 @@ router.put(
 router.delete(
   "/:id",
   isLoggedIn,
+  isOwner,
   wrapAsync(async (req, res) => {
     await Listing.findByIdAndDelete(req.params.id);
     // console.log(deletedListing);

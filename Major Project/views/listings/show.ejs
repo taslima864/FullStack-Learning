@@ -24,14 +24,14 @@
             <%= listing.country%>
           </p>
 
-          <% if(currUser && currUser._id.equals(listing.owner._id)) { %>
+        
             <div class="btns mt-3">
               <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark edit-btn col-1">Edit</a>
               <form action="/listings/<%=listing._id%>?_method=DELETE" method="POST" class="d-inline offset-1">
                 <button class="btn btn-dark">Delete</button>
               </form>
             </div>
-            <% } %>
+           
               <hr class="my-3" />
               <h4>Leave a Review</h4>
               <form action="/listings/<%= listing._id %>/reviews" method="POST" class="mb-3 needs-validation"
