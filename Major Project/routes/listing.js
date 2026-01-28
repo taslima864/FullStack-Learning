@@ -10,7 +10,7 @@ const { isLoggedIn, isOwner, validateListing } = require("../middleware.js");
 // INDEX
 router.get(
   "/",
-  isLoggedIn,
+
   wrapAsync(async (req, res) => {
     const allListings = await Listing.find({});
     res.render("listings/index", { allListings });
@@ -49,7 +49,6 @@ router.get(
       return res.redirect("/listings");
     }
 
-    console.log(listing);
     res.render("listings/show", { listing });
   }),
 );
