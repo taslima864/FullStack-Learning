@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV != "production") {
+  require("dotenv").config();
+}
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -44,7 +47,6 @@ const sessionOptions = {
   },
 };
 
-
 /* ROUTES */
 app.get("/", (req, res) => {
   res.send("Hi, I am root");
@@ -67,15 +69,14 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/demouser",async(req,res)=>{
+app.get("/demouser", async (req, res) => {
   let fakeUser3 = new User({
     email: "student@gmail.com",
-    username: "delta-student"
+    username: "delta-student",
   });
-  let registeredUser = await User.register(fakeUser3,"helloworld")
+  let registeredUser = await User.register(fakeUser3, "helloworld");
   res.send(registeredUser);
-
-})
+});
 /* ROUTES */
 
 app.use("/listings", listingsRouter);
