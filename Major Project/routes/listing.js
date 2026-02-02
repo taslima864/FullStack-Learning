@@ -16,14 +16,13 @@ router
   // INDEX route
   .get(wrapAsync(listingController.index))
   // CREATE route
-  // .post(
-  //   isLoggedIn,
-  //   validateListing,
-  //   wrapAsync(listingController.createListing),
-  // );
-  .post(upload.single("listing[image][url]"), (req, res) => {
-    res.send(req.file);
-  });
+  .post(
+    isLoggedIn,
+    // validateListing,
+    upload.single("listing[image][url]"),
+    wrapAsync(listingController.createListing),
+  );
+
 // NEW route
 router.get("/new", isLoggedIn, listingController.renderNewForm);
 
