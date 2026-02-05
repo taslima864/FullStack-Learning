@@ -12,7 +12,7 @@ module.exports.renderNewForm = (req, res) => {
   res.render("listings/new.ejs");
 };
 
-//Show Listing  
+//Show Listing
 module.exports.showListing = async (req, res) => {
   const listing = await Listing.findById(req.params.id)
     .populate({
@@ -32,7 +32,7 @@ module.exports.showListing = async (req, res) => {
 };
 
 //Create Listing
-module.exports.createListing = async (req, res,next) => {
+module.exports.createListing = async (req, res, next) => {
   let url = req.file.path;
   let filename = req.file.filename;
 
@@ -56,18 +56,22 @@ module.exports.renderEditForm = async (req, res) => {
 //Update Listing
 module.exports.updateListing = async (req, res) => {
   const { id } = req.params;
-  await Listing.findByIdAndUpdate(id, req.body.listing);
+  let listing = await Listing.findByIdAndUpdate(id, req.body.listing);
+  let url = req.file.path;
+  if(typeof req.file !== "undefined"){
+  let filename = req.file.filename;
+  listing.image = { url, filename };
+  await listing.save();
+  }
   req.flash("success", "Listing Updated!");
   res.redirect(`/listings/${id}`);
 };
 
-
 //Delete Listing
 
 module.exports.destroyListing = async (req, res) => {
-    await Listing.findByIdAndDelete(req.params.id);
-    // console.log(deletedListing);
-    req.flash("success", "Listing Deleted!");
-    res.redirect("/listings");
-  };
-
+  await Listing.findByIdAndDelete(req.params.id);
+  // console.log(deletedListing);
+  req.flash("success", "Listing Deleted!");
+  res.redirect("/listings");
+};
