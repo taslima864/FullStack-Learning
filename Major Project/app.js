@@ -35,6 +35,8 @@ app.engine("ejs", ejsMate);
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
+// app.use(express.static("public"));
+
 
 const sessionOptions = {
   secret: "mysupersecretcode",
@@ -82,6 +84,13 @@ app.get("/demouser", async (req, res) => {
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
+
+// res.render("listings/show", {
+//   listing,
+//   lat: listing.geometry.coordinates[1],
+//   lng: listing.geometry.coordinates[0]
+// });
+
 
 /* 404 */
 app.use((req, res, next) => {

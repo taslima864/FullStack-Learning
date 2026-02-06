@@ -148,3 +148,11 @@ body {
   object-fit: cover;
   width: 100%;
 }
+
+
+/* Map */
+#map {
+  height: 400px;
+  width: 100%;
+  border-radius: 10px;
+}
