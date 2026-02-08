@@ -1,8 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  if (!coordinates || coordinates.length !== 2) {
-    console.error("Coordinates missing");
-    return;
-  }
+  if (!coordinates || coordinates.length !== 2) return;
 
   const lat = coordinates[1];
   const lng = coordinates[0];
@@ -13,7 +10,21 @@ document.addEventListener("DOMContentLoaded", () => {
     attribution: "© OpenStreetMap contributors",
   }).addTo(map);
 
-  L.marker([lat, lng])
-    .addTo(map)
-    .bindPopup("Listing Location");
+  const popupContent = `
+    <strong>${listingTitle}</strong><br>
+    <small>Exact location will be provided after booking</small>
+  `;
+
+  const marker = L.marker([lat, lng]).addTo(map);
+
+  marker.bindPopup(popupContent);
+
+  
+  marker.on("mouseover", function () {
+    this.openPopup();
+  });
+
+  marker.on("mouseout", function () {
+    this.closePopup();
+  });
 });
