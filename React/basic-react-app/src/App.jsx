@@ -1,5 +1,7 @@
 import "./App.css";
+import ProductTab from "./ProductTab.jsx";
 import Title from "./Title.jsx"
+import Product from "./product.jsx";
 
 
 
@@ -9,13 +11,8 @@ function Descripton() {
 
 function App() {
   return (
-    <div>
-      <Descripton/>
-      <Descripton/>
-      <Title />
-      <Title />
-    </div>
-  );
+  <ProductTab/>
+  )
 }
 
 export default App;
