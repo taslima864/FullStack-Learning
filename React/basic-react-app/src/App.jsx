@@ -1,18 +1,14 @@
 import "./App.css";
 import ProductTab from "./ProductTab.jsx";
-import Title from "./Title.jsx"
-import Product from "./product.jsx";
-
-
-
-function Descripton() {
-  return <h3>I am the Description</h3>;
-}
 
 function App() {
   return (
-  <ProductTab/>
-  )
+    <>
+          <h2>Blockbuster Deals | Shop Now</h2>
+
+      <ProductTab />
+    </>
+  );
 }
 
 export default App;
