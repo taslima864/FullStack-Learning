@@ -16,6 +16,7 @@ export default function Comment() {
     console.log("added new comment");
   };
 
+  
   return (
     <div>
       <h3>All Comments</h3>
@@ -23,7 +24,7 @@ export default function Comment() {
       {comments.map((comment, idx) => (
         <div className="comment" key={idx}>
           <span>{comment.remarks}</span>
-          &nbsp;
+          &nbsp;&nbsp;
           <span>(rating = {comment.rating})</span>
           <p>- {comment.username}</p>
         </div>
