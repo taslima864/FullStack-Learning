@@ -1,15 +1,15 @@
 import "./App.css";
 import Lottery from "./Lottery";
 import { sum } from "./helper";
-import Form from "./Form"
-import CommentsForm from "./CommentsForms";
+import CommentsForms from "./Form/CommentsForms";
+import Comment from "./Form/Comment";
 
 function App() {
   
 
   return (
     <>
-<CommentsForm/>
+<Comment/>
     </>
   );
 }

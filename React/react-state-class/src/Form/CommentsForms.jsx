@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function CommentsForm() {
+export default function CommentsForms({ addNewComment }) {
   let [formData, setFormData] = useState({
     username: "",
     remarks: "",
@@ -9,25 +9,34 @@ export default function CommentsForm() {
 
   let handleInputChange = (event) => {
     setFormData((currData) => {
-      return { ...currData, [event.target.name]: event.target.value };
+      return {
+        ...currData,
+        [event.target.name]: event.target.value,
+      };
     });
   };
 
-  let handleSubmit = () => {
-    console.log(formData);
+  let handleSubmit = (event) => {
     event.preventDefault();
+
+    console.log(formData);
+
+    addNewComment(formData);
+
     setFormData({
       username: "",
       remarks: "",
       rating: 5,
     });
   };
+
   return (
     <div>
       <h4>Give a comment!</h4>
 
       <form onSubmit={handleSubmit}>
         <label htmlFor="username">Username</label>
+
         <input
           placeholder="username"
           type="text"
@@ -36,10 +45,12 @@ export default function CommentsForm() {
           id="username"
           name="username"
         />
+
         <br />
         <br />
 
         <label htmlFor="remark">Remarks</label>
+
         <textarea
           value={formData.remarks}
           placeholder="add few remarks"
@@ -47,10 +58,12 @@ export default function CommentsForm() {
           id="remark"
           name="remarks"
         ></textarea>
+
         <br />
         <br />
 
         <label htmlFor="rating">Ratings</label>
+
         <input
           placeholder="Ratings"
           type="number"
@@ -61,6 +74,7 @@ export default function CommentsForm() {
           id="rating"
           name="rating"
         />
+
         <br />
         <br />
 
