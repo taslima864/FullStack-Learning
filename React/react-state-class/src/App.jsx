@@ -1,16 +1,12 @@
 import "./App.css";
-import Lottery from "./Lottery";
-import { sum } from "./helper";
-import CommentsForms from "./Form/CommentsForms";
-import Comment from "./Form/Comment";
-import Counter from "./counter";
+import Joker from "./Joker";
 
 function App() {
   
 
   return (
     <>
-<Counter/>
+<Joker/>
     </>
   );
 }
